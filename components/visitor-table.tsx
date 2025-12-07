@@ -171,7 +171,7 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore }: VisitorT
               <p className="text-xs sm:text-sm mt-1">Προσθέστε τον πρώτο επισκέπτη</p>
             </div>
           ) : (
-            <div className="overflow-x-auto max-h-[50vh] sm:max-h-[55vh] md:max-h-[60vh] lg:max-h-[65vh] overflow-y-auto">
+            <div className="overflow-x-auto max-h-[calc(100vh-280px)] sm:max-h-[calc(100vh-300px)] overflow-y-auto">
               <table className="w-full text-xs sm:text-sm">
                 <thead className="bg-muted/30 border-b sticky top-0 z-10">
                   <tr>
