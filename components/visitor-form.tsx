@@ -46,15 +46,15 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
   const [foundRecord, setFoundRecord] = useState<PhoneRecord | null>(null)
   const [isSearching, setIsSearching] = useState(false)
   const [showTableDialog, setShowTableDialog] = useState(false)
-  const [tempTableNumber, setTempTableNumber] = useState("")
+  const [tempTableNumber, setTempTableNumber] = useState<string>("")
   const phoneLongPressTimer = useRef<NodeJS.Timeout | null>(null)
   const [noPhone, setNoPhone] = useState(false)
 
   const [tableConfig, setTableConfig] = useState<TableConfig>(DEFAULT_TABLE_CONFIG)
   const [showConfigDialog, setShowConfigDialog] = useState(false)
   const [configLocation, setConfigLocation] = useState<"Μ" | "Ε" | "Β">("Μ")
-  const [tempMin, setTempMin] = useState("")
-  const [tempMax, setTempMax] = useState("")
+  const [tempMin, setTempMin] = useState<string>("")
+  const [tempMax, setTempMax] = useState<string>("")
   const locationLongPressTimer = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
       setLastName(editingVisitor.lastName)
       setRank(editingVisitor.rank)
       setTableLocation(editingVisitor.tableLocation)
-      setTableNumber(editingVisitor.tableNumber || 1)
+      setTableNumber(editingVisitor.tableNumber ?? 1)
       setPersonCount(editingVisitor.personCount)
       setNoPhone(editingVisitor.phone === "Δεν υπάρχει")
     }
@@ -144,7 +144,6 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
 
   const handleLocationClick = (loc: TableLocation) => {
     setTableLocation(loc)
-    // Ρύθμιση αρχικού αριθμού τραπεζιού στο min της τοποθεσίας
     if (loc !== "Π") {
       const config = tableConfig[loc as "Μ" | "Ε" | "Β"]
       if (tableNumber < config.min || tableNumber > config.max) {
@@ -163,7 +162,6 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
       }
       setTableConfig(newConfig)
       localStorage.setItem("tableConfig", JSON.stringify(newConfig))
-      // Ενημέρωση τρέχοντος αριθμού τραπεζιού αν είναι εκτός ορίων
       if (tableLocation === configLocation) {
         if (tableNumber < min) setTableNumber(min)
         if (tableNumber > max) setTableNumber(max)

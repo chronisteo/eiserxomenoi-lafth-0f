@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { VisitorForm } from "@/components/visitor-form"
 import { VisitorTable } from "@/components/visitor-table"
 import { DateSelector } from "@/components/date-selector"
@@ -21,6 +21,8 @@ import {
   findPhoneRecord,
 } from "@/lib/db"
 import { initSupabase, getSupabase } from "@/lib/supabase-client"
+import { Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 function getLocalDateString(date: Date): string {
   const year = date.getFullYear()
@@ -36,6 +38,8 @@ export default function HomePage() {
   const [editingVisitor, setEditingVisitor] = useState<Visitor | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [showSetup, setShowSetup] = useState(false)
+  const formRef = useRef<HTMLDivElement>(null)
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   const loadData = useCallback(async () => {
     const dateKey = getLocalDateString(selectedDate)
@@ -58,6 +62,14 @@ export default function HomePage() {
     }
     init()
   }, [loadData])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollButton(window.scrollY > 300)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const handleAddVisitor = async (visitor: Omit<Visitor, "id" | "sequenceNumber" | "date">) => {
     const dateKey = getLocalDateString(selectedDate)
@@ -115,6 +127,10 @@ export default function HomePage() {
     }
   }
 
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
   if (showSetup) {
     return <SetupModal onSetup={handleSetupSubmit} />
   }
@@ -150,7 +166,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {/* Φόρμα */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1" ref={formRef}>
             <VisitorForm
               onSubmit={editingVisitor ? handleUpdateVisitor : handleAddVisitor}
               onPhoneLookup={handlePhoneLookup}
@@ -170,6 +186,17 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+
+      {showScrollButton && (
+        <Button
+          onClick={scrollToForm}
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-40 transition-all hover:scale-110"
+          size="icon"
+          title="Νέα Εγγραφή"
+        >
+          <Plus className="h-6 w-6" />
+        </Button>
+      )}
     </div>
   )
 }

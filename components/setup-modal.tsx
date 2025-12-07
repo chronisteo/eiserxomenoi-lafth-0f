@@ -4,15 +4,17 @@ import type React from "react"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 
 interface SetupModalProps {
   onSetup: (url: string, anonKey: string) => void
 }
 
 export function SetupModal({ onSetup }: SetupModalProps) {
-  const [projectId, setProjectId] = useState("")
-  const [anonKey, setAnonKey] = useState("")
-  const [error, setError] = useState("")
+  const [projectId, setProjectId] = useState<string>("")
+  const [anonKey, setAnonKey] = useState<string>("")
+  const [error, setError] = useState<string>("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,12 +41,11 @@ export function SetupModal({ onSetup }: SetupModalProps) {
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label className="block text-sm font-medium mb-1">Project ID</label>
-            <input
+            <Input
               type="text"
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
               placeholder="π.χ. zomxsxxlbomfrcyafcln"
-              className="w-full px-3 py-2 border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <p className="text-xs text-muted-foreground mt-1">
               Βρείτε το στο Settings → API (στο URL πριν από .supabase.co)
@@ -53,11 +54,11 @@ export function SetupModal({ onSetup }: SetupModalProps) {
 
           <div>
             <label className="block text-sm font-medium mb-1">API Token (Anon Key)</label>
-            <textarea
+            <Textarea
               value={anonKey}
               onChange={(e) => setAnonKey(e.target.value)}
               placeholder="eyJhbGc..."
-              className="w-full px-3 py-2 border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm font-mono"
+              className="text-sm font-mono"
               rows={3}
             />
             <p className="text-xs text-muted-foreground mt-1">Βρείτε το στο Settings → API (public anon key)</p>
