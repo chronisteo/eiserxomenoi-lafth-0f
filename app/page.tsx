@@ -153,29 +153,25 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen lg:landscape:h-screen lg:landscape:overflow-hidden bg-background flex flex-col">
-      <header className="bg-primary text-primary-foreground py-2 px-3 sm:py-3 sm:px-6 shadow-lg flex-shrink-0">
+    <div className="min-h-screen bg-background">
+      <header className="bg-primary text-primary-foreground py-2 px-3 sm:py-3 sm:px-6 shadow-lg">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
           <div>
-            <h1 className="text-base sm:text-xl lg:landscape:text-lg font-bold tracking-tight">
-              ΛΑΦΘ - Βιβλίο Επισκεπτών
-            </h1>
-            <p className="text-primary-foreground/80 text-[10px] sm:text-xs lg:landscape:text-[10px]">
-              Λέσχη Αξιωματικών Φρουράς Θεσσαλονίκης
-            </p>
+            <h1 className="text-base sm:text-xl font-bold tracking-tight">ΛΑΦΘ - Βιβλίο Επισκεπτών</h1>
+            <p className="text-primary-foreground/80 text-[10px] sm:text-xs">Λέσχη Αξιωματικών Φρουράς Θεσσαλονίκης</p>
           </div>
           <ExportButton visitors={visitors} date={selectedDate} />
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full p-2 sm:p-4 md:p-6 lg:landscape:p-2 flex flex-col gap-2 sm:gap-4 lg:landscape:gap-2 lg:landscape:overflow-hidden">
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 lg:landscape:flex-row lg:landscape:gap-2 flex-shrink-0">
+      <main className="max-w-7xl mx-auto p-2 sm:p-4 md:p-6 space-y-3 sm:space-y-6">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
           <DateSelector selectedDate={selectedDate} onDateChange={setSelectedDate} />
           <StatsPanel visitors={visitors} />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 lg:landscape:gap-3 items-start lg:landscape:flex-1 lg:landscape:overflow-hidden">
-          <div ref={formRef} id="form-section" className="lg:landscape:h-full lg:landscape:overflow-y-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 items-start">
+          <div ref={formRef} id="form-section">
             <VisitorForm
               onSubmit={editingVisitor ? handleUpdateVisitor : handleAddVisitor}
               onPhoneLookup={handlePhoneLookup}
@@ -184,7 +180,7 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="lg:landscape:h-full lg:landscape:overflow-hidden">
+          <div>
             <VisitorTable
               visitors={visitors}
               onEdit={setEditingVisitor}
@@ -199,7 +195,7 @@ export default function HomePage() {
       {showScrollTop && (
         <Button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg lg:landscape:hidden"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg"
           size="icon"
         >
           <ArrowUp className="h-5 w-5 sm:h-6 sm:w-6" />
