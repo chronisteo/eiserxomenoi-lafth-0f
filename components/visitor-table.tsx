@@ -109,7 +109,7 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
 
   return (
     <>
-      <Card className="border-2 border-border flex flex-col h-full max-h-[600px]">
+      <Card className="border-2 border-border flex flex-col" style={{ height: "600px" }}>
         <CardHeader className="bg-muted/50 pb-3 sm:pb-4 px-3 sm:px-6 flex-shrink-0">
           <CardTitle className="flex items-center gap-2 text-sm sm:text-lg">
             <List className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -120,71 +120,69 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-0 flex-1 min-h-0 overflow-hidden">
+        <CardContent className="p-0 flex-1 overflow-y-auto">
           {visitors.length === 0 ? (
             <div className="p-6 sm:p-8 text-center text-muted-foreground">
               <p className="text-base sm:text-lg">Δεν υπάρχουν καταγραφές</p>
               <p className="text-xs sm:text-sm mt-1">Προσθέστε τον πρώτο επισκέπτη</p>
             </div>
           ) : (
-            <div className="overflow-x-auto overflow-y-auto h-full">
-              <table className="w-full text-xs sm:text-sm">
-                <thead className="bg-muted/30 border-b sticky top-0 z-10">
-                  <tr>
-                    <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Α/Α</th>
-                    <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Βαθμός</th>
-                    <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Επώνυμο</th>
-                    <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold hidden sm:table-cell">Τηλέφωνο</th>
-                    <th className="py-2 sm:py-3 px-1 sm:px-2 text-center font-semibold">Τρ.</th>
-                    <th className="py-2 sm:py-3 px-1 sm:px-2 text-center font-semibold">Ατ.</th>
-                    <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Ώρα</th>
+            <table className="w-full text-xs sm:text-sm">
+              <thead className="bg-muted/30 border-b sticky top-0 z-10">
+                <tr>
+                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Α/Α</th>
+                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Βαθμός</th>
+                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Επώνυμο</th>
+                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold hidden sm:table-cell">Τηλέφωνο</th>
+                  <th className="py-2 sm:py-3 px-1 sm:px-2 text-center font-semibold">Τρ.</th>
+                  <th className="py-2 sm:py-3 px-1 sm:px-2 text-center font-semibold">Ατ.</th>
+                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Ώρα</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visitors.map((visitor, index) => (
+                  <tr
+                    key={visitor.id}
+                    className={`border-b last:border-b-0 transition-colors select-none ${
+                      visitor.isDeleted
+                        ? "opacity-40 bg-muted/20"
+                        : showActions === visitor.id
+                          ? "bg-primary/10"
+                          : index % 2 === 0
+                            ? "bg-background"
+                            : "bg-muted/20"
+                    }`}
+                    onTouchStart={(e) => handleTouchStart(visitor, e)}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    onMouseDown={(e) => handleTouchStart(visitor, e)}
+                    onMouseMove={handleTouchMove}
+                    onMouseUp={handleTouchEnd}
+                    onMouseLeave={handleTouchEnd}
+                  >
+                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono font-bold">{visitor.sequenceNumber}</td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-3">
+                      <span className="inline-block bg-primary/10 text-primary px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm font-medium">
+                        {getRankAbbreviation(visitor.rank)}
+                      </span>
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-medium max-w-[80px] sm:max-w-none truncate">
+                      {visitor.lastName}
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono hidden sm:table-cell">{visitor.phone}</td>
+                    <td className="py-2 sm:py-3 px-1 sm:px-2 text-center">
+                      <span className="inline-block bg-accent text-accent-foreground px-1.5 sm:px-2 py-0.5 sm:py-1 rounded font-bold text-xs sm:text-sm">
+                        {visitor.tableNumber
+                          ? `${visitor.tableLocation}-${visitor.tableNumber}`
+                          : visitor.tableLocation}
+                      </span>
+                    </td>
+                    <td className="py-2 sm:py-3 px-1 sm:px-2 text-center font-bold">{visitor.personCount}</td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono">{visitor.time}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {visitors.map((visitor, index) => (
-                    <tr
-                      key={visitor.id}
-                      className={`border-b last:border-b-0 transition-colors select-none ${
-                        visitor.isDeleted
-                          ? "opacity-40 bg-muted/20"
-                          : showActions === visitor.id
-                            ? "bg-primary/10"
-                            : index % 2 === 0
-                              ? "bg-background"
-                              : "bg-muted/20"
-                      }`}
-                      onTouchStart={(e) => handleTouchStart(visitor, e)}
-                      onTouchMove={handleTouchMove}
-                      onTouchEnd={handleTouchEnd}
-                      onMouseDown={(e) => handleTouchStart(visitor, e)}
-                      onMouseMove={handleTouchMove}
-                      onMouseUp={handleTouchEnd}
-                      onMouseLeave={handleTouchEnd}
-                    >
-                      <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono font-bold">{visitor.sequenceNumber}</td>
-                      <td className="py-2 sm:py-3 px-2 sm:px-3">
-                        <span className="inline-block bg-primary/10 text-primary px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm font-medium">
-                          {getRankAbbreviation(visitor.rank)}
-                        </span>
-                      </td>
-                      <td className="py-2 sm:py-3 px-2 sm:px-3 font-medium max-w-[80px] sm:max-w-none truncate">
-                        {visitor.lastName}
-                      </td>
-                      <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono hidden sm:table-cell">{visitor.phone}</td>
-                      <td className="py-2 sm:py-3 px-1 sm:px-2 text-center">
-                        <span className="inline-block bg-accent text-accent-foreground px-1.5 sm:px-2 py-0.5 sm:py-1 rounded font-bold text-xs sm:text-sm">
-                          {visitor.tableNumber
-                            ? `${visitor.tableLocation}-${visitor.tableNumber}`
-                            : visitor.tableLocation}
-                        </span>
-                      </td>
-                      <td className="py-2 sm:py-3 px-1 sm:px-2 text-center font-bold">{visitor.personCount}</td>
-                      <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono">{visitor.time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           )}
         </CardContent>
       </Card>
