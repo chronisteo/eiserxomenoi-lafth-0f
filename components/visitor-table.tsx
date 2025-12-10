@@ -109,7 +109,7 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
 
   return (
     <>
-      <Card className="border-2 border-border flex flex-col" style={{ height: "600px" }}>
+      <Card className="border-2 border-border flex flex-col" style={{ height: "calc(100vh - 120px)" }}>
         <CardHeader className="bg-muted/50 pb-3 sm:pb-4 px-3 sm:px-6 flex-shrink-0">
           <CardTitle className="flex items-center gap-2 text-sm sm:text-lg">
             <List className="h-4 w-4 sm:h-5 sm:w-5" />
