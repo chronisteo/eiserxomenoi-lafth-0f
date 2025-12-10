@@ -40,11 +40,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Phone parameter required" }, { status: 400 })
     }
 
+    // This ensures the latest owner of the phone number is returned
     const { data, error } = await supabase
       .from("visitors")
-      .select("rank, surname, first_name, phone")
+      .select("rank, surname, first_name, phone, created_at")
       .eq("phone", phone)
-      .eq("is_deleted", false)
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle()

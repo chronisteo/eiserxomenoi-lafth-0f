@@ -19,6 +19,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import {
   RANKS,
+  RANK_ABBREVIATIONS,
   TABLE_LOCATIONS,
   DEFAULT_TABLE_CONFIG,
   type Visitor,
@@ -325,7 +326,7 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                       </SelectLabel>
                       {group.ranks.map((r) => (
                         <SelectItem key={r} value={r} className="text-sm sm:text-base py-2 sm:py-3">
-                          {r}
+                          {r} ({RANK_ABBREVIATIONS[r]})
                         </SelectItem>
                       ))}
                     </SelectGroup>

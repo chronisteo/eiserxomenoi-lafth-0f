@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { VisitorForm } from "@/components/visitor-form"
 import { VisitorTable } from "@/components/visitor-table"
 import { DateSelector } from "@/components/date-selector"
@@ -39,6 +39,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true)
   const [showSetup, setShowSetup] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const formRef = useRef<HTMLDivElement>(null)
 
   const loadData = useCallback(async () => {
     const dateKey = getLocalDateString(selectedDate)
@@ -127,7 +128,13 @@ export default function HomePage() {
   }
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
+    window.scrollTo({ top: 0, behavior: "instant" })
+  }
+
+  const scrollToForm = () => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "instant", block: "start" })
+    }
   }
 
   if (showSetup) {
@@ -165,7 +172,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {/* Φόρμα */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1" ref={formRef}>
             <VisitorForm
               onSubmit={editingVisitor ? handleUpdateVisitor : handleAddVisitor}
               onPhoneLookup={handlePhoneLookup}
@@ -181,6 +188,7 @@ export default function HomePage() {
               onEdit={setEditingVisitor}
               onDelete={handleDeleteVisitor}
               onRestore={handleRestoreVisitor}
+              onScrollToForm={scrollToForm}
             />
           </div>
         </div>

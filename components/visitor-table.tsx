@@ -5,7 +5,8 @@ import type React from "react"
 import { useState, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import type { Visitor } from "@/lib/types"
+import type { Visitor, Rank } from "@/lib/types"
+import { RANK_ABBREVIATIONS } from "@/lib/types"
 import { List, Pencil, Trash2, Undo2 } from "lucide-react"
 
 interface VisitorTableProps {
@@ -13,9 +14,10 @@ interface VisitorTableProps {
   onEdit: (visitor: Visitor) => void
   onDelete: (id: string) => void
   onRestore: (id: string) => void
+  onScrollToForm?: () => void
 }
 
-export function VisitorTable({ visitors, onEdit, onDelete, onRestore }: VisitorTableProps) {
+export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollToForm }: VisitorTableProps) {
   const [selectedVisitor, setSelectedVisitor] = useState<Visitor | null>(null)
   const [showActions, setShowActions] = useState<string | null>(null)
   const longPressTimer = useRef<NodeJS.Timeout | null>(null)
@@ -74,6 +76,11 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore }: VisitorT
     if (selectedVisitor) {
       onEdit(selectedVisitor)
       setShowActions(null)
+      if (onScrollToForm) {
+        setTimeout(() => {
+          onScrollToForm()
+        }, 100)
+      }
     }
   }
 
@@ -94,58 +101,7 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore }: VisitorT
   }
 
   const getRankAbbreviation = (rank: string): string => {
-    const abbrevMap: Record<string, string> = {
-      Μέλος: "ΜΛ",
-      Αποστρατος: "ΑΠΣ",
-      Στρατηγός: "ΣΓΟ",
-      Αντιστράτηγος: "ΑΝΤΓ",
-      Υποστράτηγος: "ΥΠΤΓ",
-      Ταξίαρχος: "ΤΞΧ",
-      Συνταγματάρχης: "ΣΧΗ",
-      Αντισυνταγματάρχης: "ΑΣΧΗ",
-      Ταγματάρχης: "ΤΧΗ",
-      Λοχαγός: "ΛΓΣ",
-      Υπολοχαγός: "ΥΠΛΓ",
-      Ανθυπολοχαγός: "ΑΝΘΛΓ",
-      Ανθυπασπιστής: "ΑΝΘΠ",
-      Αρχιλοχίας: "ΑΡΧΛ",
-      Επιλοχίας: "ΕΠΛΧ",
-      Λοχίας: "ΛΧΣ",
-      Δεκανέας: "ΔΚΣ",
-      Υποδεκανέας: "ΥΠΔΚ",
-      Ναύαρχος: "ΝΧΟ",
-      Αντιναύαρχος: "ΑΝΤΝ",
-      Υποναύαρχος: "ΥΠΝΧ",
-      Αρχιπλοίαρχος: "ΑΡΧΠ",
-      Πλοίαρχος: "ΠΛΧΟ",
-      Αντιπλοίαρχος: "ΑΝΤΠ",
-      Πλωτάρχης: "ΠΛΤΧ",
-      Υποπλοίαρχος: "ΥΠΟΠ",
-      Ανθυποπλοίαρχος: "ΑΝΘΠ",
-      Σημαιοφόρος: "ΣΦΡ",
-      "Ανθυπασπιστής ΠΝ": "ΑΝΘΠΝ",
-      Αρχικελευστής: "ΑΡΧΚ",
-      Επικελευστής: "ΕΠΚΛ",
-      Κελευστής: "ΚΛΣ",
-      Δίοπος: "ΔΙΟΠ",
-      Υποδίοπος: "ΥΠΔΠ",
-      Πτέραρχος: "ΠΤΧΟ",
-      Αντιπτέραρχος: "ΑΝΤΠΤ",
-      Υποπτέραρχος: "ΥΠΟΠΤ",
-      "Ταξίαρχος Α": "ΤΞΧΑ",
-      Σμήναρχος: "ΣΜΧΟ",
-      Αντισμήναρχος: "ΑΝΤΣ",
-      Επισμηναγός: "ΕΠΣΜ",
-      Σμηναγός: "ΣΜΓΟ",
-      Υποσμηναγός: "ΥΠΣΜ",
-      Ανθυποσμηναγός: "ΑΝΘΣ",
-      "Ανθυπασπιστής ΠΑ": "ΑΝΘΠΑ",
-      Αρχισμηνίας: "ΑΡΧΣ",
-      Επισμηνίας: "ΕΠΣΜ",
-      Σμηνίας: "ΣΜΝΣ",
-      Υποσμηνίας: "ΥΠΣΜ",
-    }
-    return abbrevMap[rank] || rank.substring(0, 3).toUpperCase()
+    return RANK_ABBREVIATIONS[rank as Rank] || rank.substring(0, 3).toUpperCase()
   }
 
   const activeVisitors = visitors.filter((v) => !v.isDeleted)
@@ -171,7 +127,7 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore }: VisitorT
               <p className="text-xs sm:text-sm mt-1">Προσθέστε τον πρώτο επισκέπτη</p>
             </div>
           ) : (
-            <div className="overflow-x-auto max-h-[calc(100vh-280px)] sm:max-h-[calc(100vh-300px)] overflow-y-auto">
+            <div className="overflow-x-auto overflow-y-auto">
               <table className="w-full text-xs sm:text-sm">
                 <thead className="bg-muted/30 border-b sticky top-0 z-10">
                   <tr>
