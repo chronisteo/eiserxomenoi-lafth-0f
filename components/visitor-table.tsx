@@ -109,7 +109,7 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
 
   return (
     <>
-      <Card className="border-2 border-border flex flex-col h-full">
+      <Card className="border-2 border-border flex flex-col h-full max-h-[600px]">
         <CardHeader className="bg-muted/50 pb-3 sm:pb-4 px-3 sm:px-6 flex-shrink-0">
           <CardTitle className="flex items-center gap-2 text-sm sm:text-lg">
             <List className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -120,14 +120,14 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className="p-0 flex-1 min-h-0 overflow-hidden">
           {visitors.length === 0 ? (
             <div className="p-6 sm:p-8 text-center text-muted-foreground">
               <p className="text-base sm:text-lg">Δεν υπάρχουν καταγραφές</p>
               <p className="text-xs sm:text-sm mt-1">Προσθέστε τον πρώτο επισκέπτη</p>
             </div>
           ) : (
-            <div className="overflow-x-auto overflow-y-auto">
+            <div className="overflow-x-auto overflow-y-auto h-full">
               <table className="w-full text-xs sm:text-sm">
                 <thead className="bg-muted/30 border-b sticky top-0 z-10">
                   <tr>

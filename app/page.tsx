@@ -170,9 +170,8 @@ export default function HomePage() {
           <StatsPanel visitors={visitors} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-          {/* Φόρμα */}
-          <div className="md:col-span-1" ref={formRef}>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 items-start">
+          <div className="md:col-span-1" ref={formRef} id="form-section">
             <VisitorForm
               onSubmit={editingVisitor ? handleUpdateVisitor : handleAddVisitor}
               onPhoneLookup={handlePhoneLookup}
@@ -181,8 +180,7 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Πίνακας */}
-          <div className="md:col-span-1 xl:col-span-2">
+          <div className="md:col-span-1 xl:col-span-2 max-h-[600px] flex flex-col">
             <VisitorTable
               visitors={visitors}
               onEdit={setEditingVisitor}
