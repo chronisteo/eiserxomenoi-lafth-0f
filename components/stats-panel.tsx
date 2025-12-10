@@ -27,15 +27,17 @@ export function StatsPanel({ visitors }: StatsPanelProps) {
   ]
 
   return (
-    <div className="grid grid-cols-5 sm:flex gap-1.5 sm:gap-2 flex-wrap">
+    <div className="grid grid-cols-5 sm:flex gap-1 sm:gap-2 lg:landscape:gap-1 flex-wrap">
       {stats.map((stat) => (
         <Card
           key={stat.label}
-          className={`${stat.color} px-2 sm:px-4 py-1.5 sm:py-2 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2`}
+          className={`${stat.color} px-1.5 sm:px-4 lg:landscape:px-2 py-1 sm:py-2 lg:landscape:py-1 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 lg:landscape:gap-1`}
         >
-          <stat.icon className="h-3 w-3 sm:h-4 sm:w-4" />
-          <span className="font-semibold text-sm sm:text-base">{stat.value}</span>
-          <span className="text-[10px] sm:text-sm opacity-90 hidden sm:inline">{stat.label}</span>
+          <stat.icon className="h-3 w-3 sm:h-4 sm:w-4 lg:landscape:h-3 lg:landscape:w-3" />
+          <span className="font-semibold text-xs sm:text-base lg:landscape:text-xs">{stat.value}</span>
+          <span className="text-[9px] sm:text-sm lg:landscape:text-[9px] opacity-90 hidden sm:inline">
+            {stat.label}
+          </span>
         </Card>
       ))}
     </div>

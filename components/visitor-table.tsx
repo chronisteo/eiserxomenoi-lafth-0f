@@ -109,34 +109,48 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
 
   return (
     <>
-      <Card className="border-2 border-border flex flex-col" style={{ height: "calc(100vh - 120px)" }}>
-        <CardHeader className="bg-muted/50 pb-3 sm:pb-4 px-3 sm:px-6 flex-shrink-0">
-          <CardTitle className="flex items-center gap-2 text-sm sm:text-lg">
-            <List className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="hidden sm:inline">Καταγραφές Εισερχομένων</span>
-            <span className="sm:hidden">Εισερχόμενοι</span>
-            <span className="text-muted-foreground font-normal text-xs sm:text-sm">
+      <Card className="border-2 border-border flex flex-col h-[500px] sm:h-[calc(100vh-200px)] lg:landscape:h-full">
+        <CardHeader className="bg-muted/50 pb-2 sm:pb-4 lg:landscape:pb-2 px-3 sm:px-6 lg:landscape:px-3 flex-shrink-0">
+          <CardTitle className="flex items-center gap-2 text-xs sm:text-lg lg:landscape:text-sm">
+            <List className="h-4 w-4 sm:h-5 sm:w-5 lg:landscape:h-4 lg:landscape:w-4" />
+            <span className="hidden sm:inline lg:landscape:hidden">Καταγραφές Εισερχομένων</span>
+            <span className="sm:hidden lg:landscape:inline">Εισερχόμενοι</span>
+            <span className="text-muted-foreground font-normal text-[10px] sm:text-sm lg:landscape:text-xs">
               ({activeVisitors.length}/{totalCount})
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0 flex-1 overflow-y-auto">
           {visitors.length === 0 ? (
-            <div className="p-6 sm:p-8 text-center text-muted-foreground">
-              <p className="text-base sm:text-lg">Δεν υπάρχουν καταγραφές</p>
-              <p className="text-xs sm:text-sm mt-1">Προσθέστε τον πρώτο επισκέπτη</p>
+            <div className="p-4 sm:p-8 lg:landscape:p-4 text-center text-muted-foreground">
+              <p className="text-sm sm:text-lg lg:landscape:text-sm">Δεν υπάρχουν καταγραφές</p>
+              <p className="text-xs sm:text-sm lg:landscape:text-xs mt-1">Προσθέστε τον πρώτο επισκέπτη</p>
             </div>
           ) : (
-            <table className="w-full text-xs sm:text-sm">
+            <table className="w-full text-[10px] sm:text-sm lg:landscape:text-xs">
               <thead className="bg-muted/30 border-b sticky top-0 z-10">
                 <tr>
-                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Α/Α</th>
-                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Βαθμός</th>
-                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Επώνυμο</th>
-                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold hidden sm:table-cell">Τηλέφωνο</th>
-                  <th className="py-2 sm:py-3 px-1 sm:px-2 text-center font-semibold">Τρ.</th>
-                  <th className="py-2 sm:py-3 px-1 sm:px-2 text-center font-semibold">Ατ.</th>
-                  <th className="py-2 sm:py-3 px-2 sm:px-3 text-left font-semibold">Ώρα</th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 text-left font-semibold">
+                    Α/Α
+                  </th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 text-left font-semibold">
+                    Βαθμός
+                  </th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 text-left font-semibold">
+                    Επώνυμο
+                  </th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 text-left font-semibold hidden sm:table-cell lg:landscape:hidden">
+                    Τηλέφωνο
+                  </th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1 sm:px-2 lg:landscape:px-1 text-center font-semibold">
+                    Τρ.
+                  </th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1 sm:px-2 lg:landscape:px-1 text-center font-semibold">
+                    Ατ.
+                  </th>
+                  <th className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 text-left font-semibold">
+                    Ώρα
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -160,25 +174,33 @@ export function VisitorTable({ visitors, onEdit, onDelete, onRestore, onScrollTo
                     onMouseUp={handleTouchEnd}
                     onMouseLeave={handleTouchEnd}
                   >
-                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono font-bold">{visitor.sequenceNumber}</td>
-                    <td className="py-2 sm:py-3 px-2 sm:px-3">
-                      <span className="inline-block bg-primary/10 text-primary px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm font-medium">
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 font-mono font-bold">
+                      {visitor.sequenceNumber}
+                    </td>
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2">
+                      <span className="inline-block bg-primary/10 text-primary px-1 sm:px-2 lg:landscape:px-1 py-0.5 rounded text-[9px] sm:text-sm lg:landscape:text-[9px] font-medium">
                         {getRankAbbreviation(visitor.rank)}
                       </span>
                     </td>
-                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-medium max-w-[80px] sm:max-w-none truncate">
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 font-medium max-w-[60px] sm:max-w-none lg:landscape:max-w-[80px] truncate">
                       {visitor.lastName}
                     </td>
-                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono hidden sm:table-cell">{visitor.phone}</td>
-                    <td className="py-2 sm:py-3 px-1 sm:px-2 text-center">
-                      <span className="inline-block bg-accent text-accent-foreground px-1.5 sm:px-2 py-0.5 sm:py-1 rounded font-bold text-xs sm:text-sm">
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 font-mono hidden sm:table-cell lg:landscape:hidden">
+                      {visitor.phone}
+                    </td>
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1 sm:px-2 lg:landscape:px-1 text-center">
+                      <span className="inline-block bg-accent text-accent-foreground px-1 sm:px-2 lg:landscape:px-1 py-0.5 rounded font-bold text-[9px] sm:text-sm lg:landscape:text-[9px]">
                         {visitor.tableNumber
                           ? `${visitor.tableLocation}-${visitor.tableNumber}`
                           : visitor.tableLocation}
                       </span>
                     </td>
-                    <td className="py-2 sm:py-3 px-1 sm:px-2 text-center font-bold">{visitor.personCount}</td>
-                    <td className="py-2 sm:py-3 px-2 sm:px-3 font-mono">{visitor.time}</td>
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1 sm:px-2 lg:landscape:px-1 text-center font-bold">
+                      {visitor.personCount}
+                    </td>
+                    <td className="py-1.5 sm:py-3 lg:landscape:py-1.5 px-1.5 sm:px-3 lg:landscape:px-2 font-mono">
+                      {visitor.time}
+                    </td>
                   </tr>
                 ))}
               </tbody>

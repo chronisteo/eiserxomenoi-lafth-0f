@@ -241,24 +241,24 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
 
   return (
     <>
-      <Card className="border-2 border-border">
-        <CardHeader className="bg-muted/50 pb-3 sm:pb-4 px-3 sm:px-6">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-            <UserPlus className="h-4 w-4 sm:h-5 sm:w-5" />
+      <Card className="border-2 border-border lg:landscape:h-full lg:landscape:flex lg:landscape:flex-col">
+        <CardHeader className="bg-muted/50 pb-2 sm:pb-4 lg:landscape:pb-2 px-3 sm:px-6 lg:landscape:px-3 flex-shrink-0">
+          <CardTitle className="flex items-center gap-2 text-sm sm:text-lg lg:landscape:text-sm">
+            <UserPlus className="h-4 w-4 sm:h-5 sm:w-5 lg:landscape:h-4 lg:landscape:w-4" />
             {editingVisitor ? "Επεξεργασία Εγγραφής" : "Νέα Εγγραφή"}
           </CardTitle>
         </CardHeader>
-        <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+        <CardContent className="pt-3 sm:pt-6 lg:landscape:pt-2 px-3 sm:px-6 lg:landscape:px-3 lg:landscape:flex-1 lg:landscape:overflow-y-auto">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-5 lg:landscape:space-y-2">
             {/* Phone with lookup indicator */}
-            <div className="space-y-1.5 sm:space-y-2">
-              <Label htmlFor="phone" className="text-xs sm:text-sm font-medium">
+            <div className="space-y-1 sm:space-y-2 lg:landscape:space-y-1">
+              <Label htmlFor="phone" className="text-xs sm:text-sm lg:landscape:text-xs font-medium">
                 Τηλέφωνο
               </Label>
               <div className="relative">
                 {noPhone ? (
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 flex items-center justify-center bg-muted text-muted-foreground h-10 sm:h-12 rounded-md border">
+                    <div className="flex-1 flex items-center justify-center bg-muted text-muted-foreground h-9 sm:h-12 lg:landscape:h-9 rounded-md border text-sm">
                       <PhoneOff className="h-4 w-4 mr-2" />
                       <span>Δεν υπάρχει</span>
                     </div>
@@ -274,7 +274,7 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                       value={phone}
                       onChange={(e) => handlePhoneChange(e.target.value)}
                       placeholder="69xxxxxxxx"
-                      className="text-base sm:text-lg h-10 sm:h-12 pr-10"
+                      className="text-sm sm:text-lg lg:landscape:text-sm h-9 sm:h-12 lg:landscape:h-9 pr-10"
                       inputMode="numeric"
                       onTouchStart={handlePhoneTouchStart}
                       onTouchEnd={handlePhoneTouchEnd}
@@ -283,23 +283,23 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                       onMouseLeave={handlePhoneTouchEnd}
                     />
                     {isSearching ? (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                     ) : foundRecord ? (
-                      <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                      <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-600" />
                     ) : null}
                   </>
                 )}
               </div>
               {foundRecord && (
-                <p className="text-xs sm:text-sm text-green-600">
+                <p className="text-xs text-green-600">
                   Βρέθηκε: {foundRecord.lastName} ({foundRecord.rank})
                 </p>
               )}
             </div>
 
             {/* Last Name */}
-            <div className="space-y-1.5 sm:space-y-2">
-              <Label htmlFor="lastName" className="text-xs sm:text-sm font-medium">
+            <div className="space-y-1 sm:space-y-2 lg:landscape:space-y-1">
+              <Label htmlFor="lastName" className="text-xs sm:text-sm lg:landscape:text-xs font-medium">
                 Επώνυμο
               </Label>
               <Input
@@ -307,15 +307,15 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Επώνυμο"
-                className="text-base sm:text-lg h-10 sm:h-12"
+                className="text-sm sm:text-lg lg:landscape:text-sm h-9 sm:h-12 lg:landscape:h-9"
               />
             </div>
 
             {/* Rank */}
-            <div className="space-y-1.5 sm:space-y-2">
-              <Label className="text-xs sm:text-sm font-medium">Βαθμός / Ιδιότητα</Label>
+            <div className="space-y-1 sm:space-y-2 lg:landscape:space-y-1">
+              <Label className="text-xs sm:text-sm lg:landscape:text-xs font-medium">Βαθμός / Ιδιότητα</Label>
               <Select value={rank} onValueChange={(v) => setRank(v as Rank)}>
-                <SelectTrigger className="h-10 sm:h-12 text-sm sm:text-base">
+                <SelectTrigger className="h-9 sm:h-12 lg:landscape:h-9 text-xs sm:text-base lg:landscape:text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="max-h-[300px]">
@@ -335,15 +335,16 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
               </Select>
             </div>
 
-            <div className="space-y-1.5 sm:space-y-2">
-              <Label className="text-xs sm:text-sm font-medium">Χώρος</Label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {/* Location */}
+            <div className="space-y-1 sm:space-y-2 lg:landscape:space-y-1">
+              <Label className="text-xs sm:text-sm lg:landscape:text-xs font-medium">Χώρος</Label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 lg:landscape:gap-1">
                 {TABLE_LOCATIONS.map((loc) => (
                   <Button
                     key={loc.value}
                     type="button"
                     variant={tableLocation === loc.value ? "default" : "outline"}
-                    className="h-12 sm:h-14 text-base sm:text-lg font-bold flex flex-col gap-0.5"
+                    className="h-10 sm:h-14 lg:landscape:h-9 text-sm sm:text-lg lg:landscape:text-xs font-bold flex flex-col gap-0"
                     onClick={() => handleLocationClick(loc.value)}
                     onTouchStart={() => handleLocationTouchStart(loc.value)}
                     onTouchEnd={handleLocationTouchEnd}
@@ -352,24 +353,27 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                     onMouseLeave={handleLocationTouchEnd}
                   >
                     <span>{loc.value}</span>
-                    <span className="text-[9px] sm:text-[10px] font-normal opacity-70">{loc.label}</span>
+                    <span className="text-[8px] sm:text-[10px] lg:landscape:text-[7px] font-normal opacity-70">
+                      {loc.label}
+                    </span>
                   </Button>
                 ))}
               </div>
             </div>
 
+            {/* Table Number */}
             {needsTableNumber && (
-              <div className="space-y-1.5 sm:space-y-2">
-                <Label className="text-xs sm:text-sm font-medium">
-                  Αριθμός Τραπεζιού ({tableConfig[tableLocation as "Μ" | "Ε" | "Β"].min}-
+              <div className="space-y-1 sm:space-y-2 lg:landscape:space-y-1">
+                <Label className="text-xs sm:text-sm lg:landscape:text-xs font-medium">
+                  Τραπέζι ({tableConfig[tableLocation as "Μ" | "Ε" | "Β"].min}-
                   {tableConfig[tableLocation as "Μ" | "Ε" | "Β"].max})
                 </Label>
-                <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 lg:landscape:gap-1">
                   <Button
                     type="button"
                     variant="outline"
                     size="lg"
-                    className="h-12 sm:h-14 w-12 sm:w-14 text-xl sm:text-2xl bg-transparent"
+                    className="h-10 sm:h-14 lg:landscape:h-8 w-10 sm:w-14 lg:landscape:w-8 text-lg sm:text-2xl lg:landscape:text-base bg-transparent"
                     onClick={() => {
                       const config = tableConfig[tableLocation as "Μ" | "Ε" | "Β"]
                       setTableNumber(Math.max(config.min, tableNumber - 1))
@@ -380,10 +384,10 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                   <Button
                     type="button"
                     variant="secondary"
-                    className="flex items-center justify-center h-12 sm:h-14 px-4 sm:px-6 min-w-[90px] sm:min-w-[100px]"
+                    className="flex items-center justify-center h-10 sm:h-14 lg:landscape:h-8 px-3 sm:px-6 lg:landscape:px-2 min-w-[70px] sm:min-w-[100px] lg:landscape:min-w-[60px]"
                     onClick={handleTableNumberClick}
                   >
-                    <span className="text-xl sm:text-2xl font-bold">
+                    <span className="text-lg sm:text-2xl lg:landscape:text-sm font-bold">
                       {tableLocation}-{tableNumber}
                     </span>
                   </Button>
@@ -391,7 +395,7 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                     type="button"
                     variant="outline"
                     size="lg"
-                    className="h-12 sm:h-14 w-12 sm:w-14 text-xl sm:text-2xl bg-transparent"
+                    className="h-10 sm:h-14 lg:landscape:h-8 w-10 sm:w-14 lg:landscape:w-8 text-lg sm:text-2xl lg:landscape:text-base bg-transparent"
                     onClick={() => {
                       const config = tableConfig[tableLocation as "Μ" | "Ε" | "Β"]
                       setTableNumber(Math.min(config.max, tableNumber + 1))
@@ -400,28 +404,30 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
                     +
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">Πατήστε τον αριθμό για γρήγορη επιλογή</p>
               </div>
             )}
 
-            <div className="space-y-1.5 sm:space-y-2">
-              <Label className="text-xs sm:text-sm font-medium">Αριθμός Ατόμων</Label>
-              <div className="flex items-center gap-2 sm:gap-3">
+            {/* Person Count */}
+            <div className="space-y-1 sm:space-y-2 lg:landscape:space-y-1">
+              <Label className="text-xs sm:text-sm lg:landscape:text-xs font-medium">Αριθμός Ατόμων</Label>
+              <div className="flex items-center gap-2 sm:gap-3 lg:landscape:gap-1">
                 <Button
                   type="button"
                   variant="outline"
                   size="lg"
-                  className="h-12 sm:h-14 w-12 sm:w-14 text-xl sm:text-2xl bg-transparent"
+                  className="h-10 sm:h-14 lg:landscape:h-8 w-10 sm:w-14 lg:landscape:w-8 text-lg sm:text-2xl lg:landscape:text-base bg-transparent"
                   onClick={() => setPersonCount(Math.max(1, personCount - 1))}
                 >
                   -
                 </Button>
-                <span className="text-2xl sm:text-3xl font-bold w-14 sm:w-16 text-center">{personCount}</span>
+                <span className="text-xl sm:text-3xl lg:landscape:text-lg font-bold w-12 sm:w-16 lg:landscape:w-10 text-center">
+                  {personCount}
+                </span>
                 <Button
                   type="button"
                   variant="outline"
                   size="lg"
-                  className="h-12 sm:h-14 w-12 sm:w-14 text-xl sm:text-2xl bg-transparent"
+                  className="h-10 sm:h-14 lg:landscape:h-8 w-10 sm:w-14 lg:landscape:w-8 text-lg sm:text-2xl lg:landscape:text-base bg-transparent"
                   onClick={() => setPersonCount(personCount + 1)}
                 >
                   +
@@ -429,20 +435,24 @@ export function VisitorForm({ onSubmit, onPhoneLookup, editingVisitor, onCancelE
               </div>
             </div>
 
-            <div className="flex gap-2 sm:gap-3 pt-3 sm:pt-4">
+            {/* Submit buttons */}
+            <div className="flex gap-2 sm:gap-3 lg:landscape:gap-1 pt-2 sm:pt-4 lg:landscape:pt-1">
               {editingVisitor && (
                 <Button
                   type="button"
                   variant="outline"
-                  className="flex-1 h-12 sm:h-14 text-sm sm:text-lg bg-transparent"
+                  className="flex-1 h-10 sm:h-14 lg:landscape:h-9 text-xs sm:text-lg lg:landscape:text-xs bg-transparent"
                   onClick={handleCancel}
                 >
-                  <X className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <X className="mr-1 sm:mr-2 h-4 w-4 lg:landscape:h-3 lg:landscape:w-3" />
                   Ακύρωση
                 </Button>
               )}
-              <Button type="submit" className="flex-1 h-12 sm:h-14 text-sm sm:text-lg font-semibold">
-                <UserPlus className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <Button
+                type="submit"
+                className="flex-1 h-10 sm:h-14 lg:landscape:h-9 text-xs sm:text-lg lg:landscape:text-xs font-semibold"
+              >
+                <UserPlus className="mr-1 sm:mr-2 h-4 w-4 lg:landscape:h-3 lg:landscape:w-3" />
                 {editingVisitor ? "Ενημέρωση" : "Καταχώρηση"}
               </Button>
             </div>
