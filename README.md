@@ -22,6 +22,17 @@ Continue building your app on:
 
 **[https://v0.app/chat/dmmYLbyA1kw](https://v0.app/chat/dmmYLbyA1kw)**
 
+## Supabase configuration
+
+The app now requires Supabase Auth with a single allowed user. Configure the following environment variables before running locally or deploying:
+
+- `NEXT_PUBLIC_SUPABASE_URL` – your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` – the anonymous public API key (used by the browser and auth helpers)
+- `SUPABASE_SERVICE_ROLE_KEY` – the service role key used by API routes after authentication
+- `SUPABASE_ALLOWED_EMAIL` (or `ALLOWED_EMAIL`) – the single email address that is allowed to sign in
+
+Only password-based login is enabled. Registration should be disabled in Supabase. Users who are not signed in or whose email does not match `SUPABASE_ALLOWED_EMAIL` will be redirected to `/login` and receive a forbidden response from API routes.
+
 ## How It Works
 
 1. Create and modify your project using [v0.app](https://v0.app)

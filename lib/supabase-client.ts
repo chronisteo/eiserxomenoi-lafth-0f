@@ -39,4 +39,4 @@ export function getSupabase() {
 }
 
 // Export for backward compatibility
-export const supabase = getSupabase()
+// Export intentionally omitted to avoid initializing Supabase on module import
